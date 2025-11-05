@@ -1,0 +1,33 @@
+---
+title: "hw_6"
+format: pdf
+editor: visual
+author: "Everett, Sophie, and Xinyu"
+knitr:
+  opts_chunk:
+    echo: false
+    fig.width: 6.5
+    fig.height: 8
+bibliography: references.bib
+---
+
+# Load packages
+
+```{r}
+library(tidyverse)
+library(here)   
+library(haven)    
+library(readr)    
+library(readxl)
+```
+
+# Load data
+
+```{r}
+star <- read_csv(here("data", "star.csv"))
+```
+@singh2025's work demonstrated altered brain rsFC among patient with major depressive disorders, which is consistent with existing evidence [@krug2022], [@swartz2021], [@ishikawa2022].
+
+\newpage
+# Reference
+
