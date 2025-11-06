@@ -1,0 +1,50 @@
+---
+title: "hw_6"
+format: html
+editor: visual
+echo: false
+message: false
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+library(dplyr)
+library(knitr)
+library(readr)
+star <- read_csv("data/star.csv")
+```
+
+```{r}
+colnames(star)
+summary_table<-star|>
+  group_by(sex,frl)%>%
+  summarize(
+    math_mean=round(mean(tmathss,na.rm = TRUE), 2),
+    math_sd=round(sd(tmathss, na.rm = TRUE), 2),
+    rdg_mean=round(mean(treadss,na.rm=TRUE), 2),
+    rdg_sd=round(sd(treadss,na.rm = TRUE),
+    2),
+    .groups = "drop")
+kable(summary_table)
+#This table shows us the mean and standard deviation of both math and reading scores based upon the students sex and free-reduced lunch (FRL) status.From the table we can see that girls scores higher in both math and reading scores in comparison to their male counterparts who recieved or did not recieve FRL. Secondly, we can see that students who do not recieve FRL overall, have higher academic performance in these two areas, showing a discrimination between SES and academic outcomes. 
+```
