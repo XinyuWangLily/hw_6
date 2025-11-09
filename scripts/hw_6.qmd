@@ -9,6 +9,8 @@ knitr:
     fig.width: 6.5
     fig.height: 8
 bibliography: references.bib
+warning: false
+message: false
 ---
 
 # Load packages
@@ -30,11 +32,11 @@ star <- read_csv(here("data", "star.csv"))
 
 # Citation examples
 
-@singh2025's work demonstrated altered brain rsFC among patient with major depressive disorders, which is consistent with existing evidence [@krug2022], [@swartz2021], [@ishikawa2022].
+@singh2025's work demonstrated altered brain rsFC among patients with major depressive disorders, which is consistent with existing evidence [@krug2022], [@swartz2021], [@ishikawa2022].
 
 # Summary statistics table
 ```{r}
-colnames(star)
+#colnames(star)
 summary_table<-star|>
   group_by(sex,frl)%>%
   summarize(
@@ -47,7 +49,21 @@ summary_table<-star|>
 kable(summary_table)
 ```
 
-This table shows us the mean and standard deviation of both math and reading scores based upon the students sex and free-reduced lunch (FRL) status.From the table we can see that girls scores higher in both math and reading scores in comparison to their male counterparts who recieved or did not recieve FRL. Secondly, we can see that students who do not recieve FRL overall, have higher academic performance in these two areas, showing a discrimination between SES and academic outcomes. 
+This table shows us the mean and standard deviation of both math and reading scores based upon the students sex and free-reduced lunch (FRL) status. From the table we can see that girls scores higher in both math and reading scores in comparison to their male counterparts who recieved or did not recieve FRL. Secondly, we can see that students who do not recieve FRL overall, have higher academic performance in these two areas, showing a discrimination between SES and academic outcomes. 
+
+# Plot
+```{r}
+star %>% 
+  ggplot(aes(totexp, tmathss)) +   
+  geom_point(color="gray") +
+  geom_smooth(aes(color = frl), method = "lm", se = TRUE) +
+  labs(x="Teacher Experience (years)", y="Total Math Scale Score", title="Relation between teacher experience and math score", subtitle="Separate regression lines displayed by free/reduced price lunch status") +
+  theme_minimal() +
+  theme(legend.position="bottom")
+  
+```
+
+The plot above demonstrates the relation between teacher experience and math scores, including a linear regression line (gray bands represent standard errors). Separate lines are presented for students who are eligible for free and reduced lunch (blue) and those that are not (red). Based on visual analysis alone, the slope of the relation does not appear to substantially differ between the two groups. That is, as teacher experience increases, the average math scale score for students is higher, and this pattern is true for both groups. However, the line representing FRL-eligible students is below the non-FRL-eligible line, indicating that average math performance is lower in this group across teacher experience levels. 
 
 \newpage
 
