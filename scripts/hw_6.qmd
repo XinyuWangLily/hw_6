@@ -19,6 +19,7 @@ library(here)
 library(haven)    
 library(readr)    
 library(readxl)
+library(knitr)
 ```
 
 # Load data
@@ -26,8 +27,28 @@ library(readxl)
 ```{r}
 star <- read_csv(here("data", "star.csv"))
 ```
+
+# Citation examples
+
 @singh2025's work demonstrated altered brain rsFC among patient with major depressive disorders, which is consistent with existing evidence [@krug2022], [@swartz2021], [@ishikawa2022].
 
-\newpage
-# Reference
+# Summary statistics table
+```{r}
+colnames(star)
+summary_table<-star|>
+  group_by(sex,frl)%>%
+  summarize(
+    math_mean=round(mean(tmathss,na.rm = TRUE), 2),
+    math_sd=round(sd(tmathss, na.rm = TRUE), 2),
+    rdg_mean=round(mean(treadss,na.rm=TRUE), 2),
+    rdg_sd=round(sd(treadss,na.rm = TRUE),
+    2),
+    .groups = "drop")
+kable(summary_table)
+```
 
+This table shows us the mean and standard deviation of both math and reading scores based upon the students sex and free-reduced lunch (FRL) status.From the table we can see that girls scores higher in both math and reading scores in comparison to their male counterparts who recieved or did not recieve FRL. Secondly, we can see that students who do not recieve FRL overall, have higher academic performance in these two areas, showing a discrimination between SES and academic outcomes. 
+
+\newpage
+
+# Reference
